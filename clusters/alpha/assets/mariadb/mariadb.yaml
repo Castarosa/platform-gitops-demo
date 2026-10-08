@@ -1,0 +1,30 @@
+apiVersion: k8s.mariadb.com/v1alpha1
+kind: MariaDB
+metadata:
+  name: mariadb
+  namespace: wiki
+spec:
+  rootPasswordSecretKeyRef:
+    name: mariadb-root-secret
+    key: password
+    generate: true
+
+  image: mariadb:12.3.2
+
+  storage:
+    size: 5Gi
+
+  database: wiki
+  username: wiki
+  passwordSecretKeyRef:
+    name: mariadb-wiki-secret
+    key: password
+    generate: true
+
+  resources:
+    requests:
+      cpu: 250m
+      memory: 512Mi
+    limits:
+      cpu: 1
+      memory: 2Gi
